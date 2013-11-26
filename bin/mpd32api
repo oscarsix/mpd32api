@@ -1,0 +1,27 @@
+#!/usr/bin/ruby
+if File.symlink?(__FILE__)
+  $LOAD_PATH.unshift File.expand_path('../../lib', File.readlink(__FILE__))
+else
+  $LOAD_PATH.unshift File.join(File.dirname(__FILE__), '..', 'lib')
+end
+
+require 'mpd32api'
+
+begin
+
+  # Get midi input and output
+  input = Mpd32Api.get_midi_input_device
+  output = Mpd32Api.get_midi_output_device
+
+  # Create an instance of Mpd32Api::Library
+  mpd32api = Mpd32Api::Library.new input, output
+
+  # Use the Mpd32Api methods
+  mpd32api.showcase
+
+rescue Exception => e
+  puts e.backtrace
+end
+
+
+
